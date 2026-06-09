@@ -1,0 +1,38 @@
+==================== 2026-06-08T23:19:51.354699Z | 019ea989-0b30-70a3-b167-bfec774e7172 ====================
+23:19:51.357053 [info ]: dbt-fusion 2.0.0-preview.183
+23:19:51.359764 [info ]: Started loading project
+23:19:51.381955 [info ]: Loading ~/.dbt/profiles.yml
+23:19:51.385105 [info ]: Finished loading project [  0.03s]
+23:19:51.388146 [error]: [IoError (dbt1001)]: Profile 'credit_risk_analytics' not found in profiles.yml
+  --> dbt_project.yml:5:10
+23:19:51.931359 [info ]: 
+==================== Execution Summary =====================
+Finished 'debug' with 1 error [576ms]
+==================== 2026-06-08T23:20:12.693264Z | 019ea989-5e93-7693-9ee9-6bbb7102bbd9 ====================
+23:20:12.693341 [info ]: dbt-fusion 2.0.0-preview.183
+23:20:12.693475 [info ]: Started loading project
+23:20:12.694590 [info ]: Loading ~/.dbt/profiles.yml
+23:20:12.700840 [info ]: Finished loading project [  0.01s]
+23:20:12.701326 [info ]: Started debugging
+23:20:12.702227 [info ]: Debugging profile: dev
+23:20:12.702254 [info ]: Debugging dbt version: 2.0.0-preview.183
+23:20:12.702264 [info ]: Debugging platform: macos aarch64 (unix)
+23:20:12.702681 [info ]: Debugging adapter type: snowflake (remote)
+23:20:12.723195 [info ]: Debugging dependencies:
+  git: OK
+23:20:12.725505 [info ]: Debugging connection:
+  "account": "RAUXMEW-TJB99155",
+  "user": "PSISTA",
+  "database": "BANKING_DEV_DB",
+  "warehouse": "DE_DEV_WH",
+  "schema": "RAW",
+  "role": "DE_TRANSFORM_ADMIN_ROLE"
+23:20:16.553303 [debug]: Query executed on node unknown:
+select 1 as id
+23:20:16.555827 [info ]: Debugging connection test: OK
+23:20:16.556424 [info ]: Debugged All checks passed!
+23:20:16.556941 [info ]: Finished debugging [  3.86s]
+23:20:16.900341 [info ]: New version available 2.0.0-preview.186 (run `dbt system update`)
+23:20:16.991956 [info ]: 
+==================== Execution Summary =====================
+Finished 'debug' successfully for target 'dev' [4.3s]

@@ -1,0 +1,36 @@
+name: 'credit_risk_analytics'
+version: '1.0.0'
+config-version: 2
+
+profile: 'credit_risk_analytics'
+
+model-paths: ["models"]
+analysis-paths: ["analyses"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+
+clean-targets:
+  - "target"
+  - "dbt_packages"
+
+models:
+  credit_risk_analytics:
+    # Staging Layer: Cleanses, casts data formats, maps schemas
+    staging:
+      +materialized: view
+      +database: "{{ 'BANKING_PROD_DB' if target.name == 'prod' else 'BANKING_UAT_DB' if target.name == 'uat' else 'BANKING_DEV_DB' }}"
+      +schema: PREPARED
+      
+    # Intermediate Layer: Complex banking math (Credit Risk metrics like EAD, PD, LGD)
+    intermediate:
+      +materialized: view
+      +database: "{{ 'BANKING_PROD_DB' if target.name == 'prod' else 'BANKING_UAT_DB' if target.name == 'uat' else 'BANKING_DEV_DB' }}"
+      +schema: PREPARED
+
+    # Marts Layer: Dimensional modeling (10 Dimensions, 1 Fact) for Business & Regulatory reports
+    marts:
+      +materialized: table
+      +database: "{{ 'BANKING_PROD_DB' if target.name == 'prod' else 'BANKING_UAT_DB' if target.name == 'uat' else 'BANKING_DEV_DB' }}"
+      +schema: CURATED
