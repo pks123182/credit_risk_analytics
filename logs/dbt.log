@@ -36,3 +36,50 @@ select 1 as id
 23:20:16.991956 [info ]: 
 ==================== Execution Summary =====================
 Finished 'debug' successfully for target 'dev' [4.3s]
+==================== 2026-06-09T04:55:36.793187Z | 019eaabc-704f-78e0-a64b-94644b606f80 ====================
+04:55:36.795214 [info ]: dbt-fusion 2.0.0-preview.183
+04:55:37.422469 [info ]: 
+==================== Execution Summary =====================
+Finished 'deps' successfully [629ms]
+==================== 2026-06-09T05:00:00.074111Z | 019eaac0-74c8-75a0-9b88-8fbaa7ed5c5e ====================
+05:00:00.074181 [info ]: dbt-fusion 2.0.0-preview.183
+05:00:00.446112 [info ]: 
+==================== Execution Summary =====================
+Finished 'deps' successfully [372ms]
+==================== 2026-06-09T05:10:41.765308Z | 019eaaca-3f63-7711-a59a-b86096c8fe03 ====================
+05:10:41.765466 [info ]: dbt-fusion 2.0.0-preview.183
+05:10:41.765519 [info ]: Started cleaning
+05:10:41.766702 [info ]: Started loading project
+05:10:41.767757 [info ]: Loading ~/.dbt/profiles.yml
+05:10:41.768108 [info ]: Finished loading project [  0.00s]
+05:10:41.771948 [info ]: Removing target
+05:10:41.773638 [info ]: Removing dbt_packages
+05:10:41.773849 [info ]: Finished cleaning [  0.01s]
+05:10:42.350225 [info ]: 
+==================== Execution Summary =====================
+Finished 'clean' successfully [584ms]
+==================== 2026-06-09T05:11:34.484485Z | 019eaacb-0d52-77e2-9639-ef096c177cbc ====================
+05:11:34.484566 [info ]: dbt-fusion 2.0.0-preview.183
+05:11:34.768479 [info ]: 
+==================== Execution Summary =====================
+Finished 'deps' successfully [283ms]
+==================== 2026-06-09T05:18:20.645495Z | 019eaad1-3fe4-7c60-836a-71d9ef651b0c ====================
+05:18:20.645574 [info ]: dbt-fusion 2.0.0-preview.183
+05:18:20.654026 [info ]:    Started resolving packages from packages.yml
+05:18:20.826143 [info ]:     Failed [  0.17s] resolving packages from packages.yml (error: No compatible versions found for package 'dbt-labs/dbt_project_evaluator')
+05:18:20.826323 [error]: [InvalidConfig (dbt1005)]: No compatible versions found for package 'dbt-labs/dbt_project_evaluator'
+05:18:21.064560 [info ]: 
+==================== Execution Summary =====================
+Finished 'deps' with 1 error [419ms]
+==================== 2026-06-09T05:25:27.001192Z | 019eaad7-c157-7202-9365-2d79a0ab76d8 ====================
+05:25:27.001276 [info ]: dbt-fusion 2.0.0-preview.183
+05:25:27.010848 [info ]: Loading packages.yml
+05:25:27.010949 [info ]: Installing packages
+05:25:27.062408 [info ]: Installing dbt-labs/dbt_project_evaluator
+05:25:27.748748 [info ]:  Installed dbt-labs/dbt_project_evaluator: 1.3.0
+05:25:27.748815 [info ]: Installing dbt-labs/dbt_utils
+05:25:28.000605 [info ]:  Installed dbt-labs/dbt_utils: 1.3.3
+05:25:28.000766 [info ]:  Installed 2 packages
+05:25:28.092253 [info ]: 
+==================== Execution Summary =====================
+Finished 'deps' successfully [1.1s]

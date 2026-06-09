@@ -1,0 +1,15 @@
+# ==============================================================================
+# dbt Specific Rule Blocks
+# ==============================================================================
+# Ignore the local third-party dependency code libraries we just downloaded
+dbt_packages/
+
+# Ignore local execution caches and compiled SQL compile blocks
+target/
+logs/
+
+# ==============================================================================
+# Mac System OS Clutter
+# ==============================================================================
+.DS_Store
+dbt_internal_packages/
