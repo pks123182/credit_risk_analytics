@@ -1,0 +1,46 @@
+version: 2
+
+sources:
+  - name: banking_raw
+    description: "Raw financial data ingested from upstream core banking applications, credit bureaus, and macro indices."
+    database: BANKING_DEV_DB
+    schema: RAW
+    tables:
+      - name: customer_loans
+        description: "Core table tracking active loan accounts, original balances, and internal risk grades."
+        columns:
+          - name: loan_id
+            description: "Primary key for the loan contract."
+            tests:
+              - unique
+              - not_null
+
+      - name: customer_risk_profiles
+        description: "Credit bureau standings and customer internal risk metrics."
+        columns:
+          - name: customer_id
+            description: "Primary key tracking the individual borrower."
+            tests:
+              - unique
+              - not_null
+
+      - name: collateral_valuations
+        description: "Secured asset valuations used to mitigate LGD calculations."
+        columns:
+          - name: collateral_id
+            description: "Primary key for the collateral instrument."
+            tests:
+              - unique
+              - not_null
+
+      - name: market_derivatives
+        description: "Trading desk derivative exposures for counterparty credit calculations."
+        columns:
+          - name: contract_id
+            description: "Primary key for the financial derivative contract."
+            tests:
+              - unique
+              - not_null
+
+      - name: macroeconomic_indicators
+        description: "External annualized metrics used to calibrate baseline probability of default vectors."

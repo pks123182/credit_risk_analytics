@@ -22,7 +22,7 @@ models:
       +materialized: view
       +database: "{{ 'BANKING_PROD_DB' if target.name == 'prod' else 'BANKING_UAT_DB' if target.name == 'uat' else 'BANKING_DEV_DB' }}"
       +schema: PREPARED
-      
+
     # Intermediate Layer: Complex banking math (Credit Risk metrics like EAD, PD, LGD)
     intermediate:
       +materialized: view
@@ -34,3 +34,17 @@ models:
       +materialized: table
       +database: "{{ 'BANKING_PROD_DB' if target.name == 'prod' else 'BANKING_UAT_DB' if target.name == 'uat' else 'BANKING_DEV_DB' }}"
       +schema: CURATED
+
+  # Package Models: Aligned with credit_risk_analytics under the main models key
+  # Isolate the package models here:
+  dbt_project_evaluator:
+    +schema: PROJECT_EVALUATOR
+
+vars:
+  # The orchestrator will pass a real UUID at runtime (e.g., dbt run --vars "{'orchestrator_run_id': 'abc-123'}")
+  # If running locally, it defaults gracefully to 'LOCAL_DEV_BATCH'
+  orchestrator_run_id: 'LOCAL_DEV_BATCH'
+
+seeds:
+  credit_risk_analytics:
+    +schema: RAW
