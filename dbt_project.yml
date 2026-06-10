@@ -1,3 +1,16 @@
+# --- THE STORY OF THIS PROJECT ---
+# Welcome to the Control Center of the Credit Risk Analytics Engine.
+# This file acts as the ultimate blueprint, governing how data transforms from raw financial noise 
+# into audit-ready, regulatory-compliant data models.
+#
+# It divides our analytical landscape into three distinct execution rings:
+#   1. STAGING (Prepared View): The strict gatekeeper that normalizes incoming transactions.
+#   2. INTERMEDIATE (Prepared View): The risk calculation engine computing complex metrics (EAD, PD, LGD, Concentration).
+#   3. MARTS (Curated Table): The business-facing dimensional layer built for reporting performance.
+#
+# By leveraging dynamic target routing, this configuration automatically manages environment promotion, 
+# seamlessly shifting between DEV, UAT, and PROD databases based on who or what triggers the run.
+
 name: 'credit_risk_analytics'
 version: '1.0.0'
 config-version: 2
@@ -36,7 +49,6 @@ models:
       +schema: CURATED
 
   # Package Models: Aligned with credit_risk_analytics under the main models key
-  # Isolate the package models here:
   dbt_project_evaluator:
     +schema: PROJECT_EVALUATOR
 

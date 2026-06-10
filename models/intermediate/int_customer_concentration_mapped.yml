@@ -1,0 +1,47 @@
+version: 2
+
+models:
+  - name: int_customer_concentration_mapped
+    description: |
+      --- THE STORY OF THIS MODEL ---
+      Once raw customer data is ingested and staged, it enters this intermediate layer to be armed with 
+      analytical intelligence before reaching the final executive dashboards. 
+      
+      This model serves as our portfolio's 'Risk Translator'. It takes the qualitative risk grades assigned 
+      by the underwriting system (like 'HIGH_QUALITY' or 'DOUBTFUL') and translates them into precise, 
+      numeric risk weighting coefficients. By doing this heavy lifting here, downstream models can instantly 
+      calculate total aggregate credit concentrations across countries and industry sectors using simple math, 
+      rather than messy, repetitive CASE WHEN statements.
+      
+      It also acts as an early warning system—flagging low credit scores and severe risk grades on the fly 
+      so the business can spot dangerous exposure spikes before they violate compliance limits.
+    columns:
+      - name: customer_id
+        description: "The unique identifier for the customer."
+        tests:
+          - not_null
+          - unique
+
+      - name: internal_risk_grade
+        description: "The internal risk grading assigned by the underwriting system."
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['INVESTMENT_GRADE', 'SUBSTANDARD', 'DOUBTFUL', 'HIGH_QUALITY', 'WATCH_LIST']
+
+      - name: risk_weighting_coefficient
+        description: "The calculated numeric risk weight assigned to the profile based on the internal risk grade."
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: [0.10, 0.20, 0.50, 0.80, 1.00]
+
+      - name: is_high_risk_exposure
+        description: "Binary flag indicating high-exposure targets (1 = High Risk, 0 = Standard Risk)."
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: [0, 1]

@@ -2,7 +2,19 @@ version: 2
 
 sources:
   - name: banking_raw
-    description: "Raw financial data ingested from upstream core banking applications, credit bureaus, and macro indices."
+    description: |
+      --- THE STORY OF THIS SOURCE ---
+      Welcome to the absolute origin point of our credit risk ecosystem. This source block defines the landing 
+      zone where raw, unvarnished financial data streams in from the outside world. It aggregates transactional 
+      and operational metrics from core core banking backends, external credit bureaus, trading desks, 
+      and global economic indicators. 
+      
+      Because this data is raw, it is inherently unpredictable. It represents the unchecked heartbeat of the bank's 
+      daily lending and trading activities. 
+      
+      By clearly documenting and assigning primary key checks right here at the source boundary, we create an 
+      indispensable contract with our upstream infrastructure teams. It ensures we catch malformed replication loads, 
+      duplicate records, or extraction failures before they ever touch our warehouse transformations.
     database: BANKING_DEV_DB
     schema: RAW
     tables:

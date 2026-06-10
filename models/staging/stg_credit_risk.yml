@@ -2,7 +2,19 @@ version: 2
 
 models:
   - name: stg_customer_risk_profiles
-    description: "Staging view for customer credit dimensions, internal risk grades, and counterparty tracking."
+    description: |
+      --- THE STORY OF THIS MODEL ---
+      This staging model serves as the absolute gatekeeper and bedrock of our credit risk data pipeline. 
+      Before any risk calculations, concentration metrics, or executive dashboards can be built, the raw 
+      ingested data must prove its integrity right here. 
+      
+      This layer extracts raw customer profile dimensions and transforms them into a clean, standardized, 
+      and predictable format. It strips away technical noise and enforces strict data types for key risk fields—like 
+      credit scores, counterparty categories, and underwriting grades. 
+      
+      By running rigorous data quality checks at this entry point, the model ensures that no broken primary keys, 
+      null values, or rogue, unmapped risk classifications can slip through to pollute downstream calculations. 
+      If the data isn't clean here, the pipeline stops here.
     columns:
       - name: customer_id
         description: "The unique primary key for the customer."
