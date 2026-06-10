@@ -1,3 +1,12 @@
+# --- THE STORY OF THIS FILE ---
+# This is our project's Import Ledger. Instead of reinventing the wheel for basic data utilities 
+# or testing code quality, we tap into the global dbt community to bring in proven, battle-tested tools.
+# 
+# Here, we pull in 'dbt_utils' for advanced macro functions and 'dbt_project_evaluator' to act as an 
+# automated code-reviewer that flags bad modeling habits before they merge into production.
+# We intentionally use version ranges (e.g., ">=1.1.0", "<2.0.0") to allow for minor patches while 
+# shielding the project from breaking, major-version alterations.
+
 packages:
   - package: dbt-labs/dbt_utils
     version: [">=1.1.0", "<2.0.0"]
