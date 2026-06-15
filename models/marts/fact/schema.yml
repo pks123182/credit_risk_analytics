@@ -1,0 +1,125 @@
+# =========================================================================
+# --- THE STORY OF THIS CONFIGURATION ---
+# This 'schema.yml' file serves as the strict regulatory gatekeeper for our 
+# Credit Risk Data Mart. It defines our data asset descriptions and enforces 
+# automatic data quality contracts directly within Snowflake.
+#
+# Business & Audit Value:
+# By applying uniqueness and referential integrity tests, we guarantee to banking auditors 
+# that our Risk Mart is completely free of orphaned rows, duplicated balances, or missing keys. 
+# If a pipeline failure introduces corrupt data, these tests halt the build to protect downstream 
+# financial disclosures.
+# =========================================================================
+
+version: 2
+
+models:
+  # =========================================================================
+  # DIMENSION LAYER TESTING (Enforcing Unique Business Entities)
+  # =========================================================================
+  - name: dim_counterparty
+    description: "Profiles borrowers, ultimate parent entities, and internal risk grades."
+    columns:
+      - name: counterparty_key
+        description: "Primary key for the counterparty dimension. Enforces one row per customer legal entity."
+        tests:
+          - unique
+          - not_null
+
+  - name: dim_currencies
+    description: "Holds ISO currency codes and symbols for FX portfolio tracking."
+    columns:
+      - name: currency_key
+        description: "Primary key for the currency dimension. Guarantees clean multi-currency conversion paths."
+        tests:
+          - unique
+          - not_null
+
+  - name: dim_facility
+    description: "Tracks specific loan agreement structures and commitment dates."
+    columns:
+      - name: facility_key
+        description: "Primary key for the facility dimension. Protects contract-level parameters from duplication."
+        tests:
+          - unique
+          - not_null
+
+  # =========================================================================
+  # FACT LAYER TESTING (Enforcing Referential Integrity & Balance Sheet Accuracy)
+  # =========================================================================
+  - name: fct_exposures
+    description: "Daily snapshot table measuring credit limits, utilization, and EAD inputs."
+    columns:
+      - name: as_of_date
+        description: "The daily temporal reporting axis snapshot point."
+        tests:
+          - not_null
+
+      - name: counterparty_key
+        description: "Foreign key linking to dim_counterparty. Validates that every exposure points to an audited borrower."
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_counterparty')
+                field: counterparty_key
+
+      - name: facility_key
+        description: "Foreign key linking to dim_facility. Ensures no exposure exists without an underlying contract."
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_facility')
+                field: facility_key
+
+      - name: currency_key
+        description: "Foreign key linking to dim_currencies. Guarantees currency calculations map cleanly to valid FX records."
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_currencies')
+                field: currency_key
+
+      - name: outstanding_balance
+        description: "The primary numerical metric representing drawn balances on the bank's books."
+        tests:
+          - not_null
+
+  - name: fct_pd_lgd
+    description: "Daily snapshot table tracking credit risk parameters (PD, LGD) and risk grades."
+    columns:
+      - name: as_of_date
+        tests:
+          - not_null
+      - name: counterparty_key
+        description: "Validates that risk modeling parameters map cleanly back to an existing counterparty entity."
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_counterparty')
+                field: counterparty_key
+
+  - name: fct_provisions_ecl
+    description: "Calculates Expected Credit Losses (ECL) and tracks IFRS9/CECL impairment stages."
+    columns:
+      - name: as_of_date
+        description: "The daily temporal reporting axis snapshot point."
+        tests:
+          - not_null
+          
+      - name: counterparty_key
+        description: "Ensures that every ECL calculation is tied to a valid counterparty profile."
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_counterparty')
+                field: counterparty_key
+              
+      - name: expected_credit_loss_ecl
+        description: "The core regulatory accounting figure outputting necessary capital reserve allowances."
+        tests:
+          - not_null
